@@ -26,9 +26,9 @@ const checkedUniqueTags = (value) => {
 
 const addValidators = () => {
   validateUploadForm.addValidator(photoDescription, checkedMaxLengthPhotoDescription, `Комментарий не более ${MAX_LENGTH_PHOTO_DESCRIPTION} символов`);
-  validateUploadForm.addValidator(photoHashtags, checkedValidTags, 'Введён невалидный хэш-тег', 2);
-  validateUploadForm.addValidator(photoHashtags, checkedQuantityTags, 'Превышено количество хэш-тегов', 1);
-  validateUploadForm.addValidator(photoHashtags, checkedUniqueTags, 'Хэш-теги повторяются', 3);
+  validateUploadForm.addValidator(photoHashtags, checkedValidTags, 'Введён невалидный хэш-тег', 1, true);
+  validateUploadForm.addValidator(photoHashtags, checkedQuantityTags, 'Превышено количество хэш-тегов', 3, true);
+  validateUploadForm.addValidator(photoHashtags, checkedUniqueTags, 'Хэш-теги повторяются', 2);
 };
 
 addValidators();
