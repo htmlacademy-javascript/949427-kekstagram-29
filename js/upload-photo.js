@@ -1,14 +1,19 @@
 import {initValidateUploadForm, resetUploadFormErrors} from './validate-upload-form.js';
+import {initScalePhoto, scaleReset} from './scale-upload-photo.js';
+import {initEffectsPhoto, effectsReset} from './effects-upload-photo.js';
+
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadInput = document.querySelector('.img-upload__input');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
-const uploadCansel = document.querySelector('.img-upload__cancel');
+const uploadCancel = document.querySelector('.img-upload__cancel');
 
 const openUploadForm = () => {
   uploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  uploadCansel.addEventListener('click', onUploadCanselClick);
+  uploadCancel.addEventListener('click', onUploadCancelClick);
   document.addEventListener('keydown', onDocumentKeydown);
+  initScalePhoto();
+  initEffectsPhoto();
 };
 
 const closeUploadForm = () => {
@@ -16,12 +21,14 @@ const closeUploadForm = () => {
   document.body.classList.remove('modal-open');
   uploadForm.reset();
   resetUploadFormErrors();
+  scaleReset();
+  effectsReset();
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
 const onUploadInputChange = () => openUploadForm ();
 
-function onUploadCanselClick () {
+function onUploadCancelClick () {
   closeUploadForm();
 }
 
@@ -33,8 +40,9 @@ function onDocumentKeydown(evt) {
 }
 
 const onUploadFormSubmit = (evt) => {
-  evt.preventDefault();
-  initValidateUploadForm();
+  if (!initValidateUploadForm()) {
+    evt.preventDefault();
+  }
 };
 
 const initUploadPhoto = () => {
@@ -42,4 +50,4 @@ const initUploadPhoto = () => {
   uploadForm.addEventListener('submit', onUploadFormSubmit);
 };
 
-export {initUploadPhoto, uploadForm};
+export {initUploadPhoto};
