@@ -1,4 +1,4 @@
-import {createPhotos} from './data.js';
+import {createPhotos} from '../data.js';
 import {openFullsizePhoto} from './fullsize-photo.js';
 
 const usersPhotos = createPhotos();

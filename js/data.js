@@ -1,4 +1,4 @@
-import {getRandomInteger, getRandomArrayElement} from './util.js';
+import {getRandomInteger, getRandomArrayElement} from './utils/util.js';
 
 const TestSet = {
   QUANTITY: 25,
