@@ -1412,3 +1412,14 @@ main {
 .img-upload__field-wrapper--error {
   color: #e90000;
 }
+
+.get-data__error {
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  padding: 10px 3px;
+  text-align: center;
+  background-color: #e90000;
+}

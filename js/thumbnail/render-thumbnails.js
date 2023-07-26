@@ -1,7 +1,5 @@
-import {createPhotos} from '../data.js';
 import {openFullsizePhoto} from './fullsize-photo.js';
 
-const usersPhotos = createPhotos();
 const usersListPhotos = document.querySelector('.pictures');
 const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
@@ -19,9 +17,9 @@ const createThumbnail = ({url, description, likes, comments}) => {
   return thumbnail;
 };
 
-const renderThumbnails = () => {
+const renderThumbnails = (photos) => {
   const usersListFragment = document.createDocumentFragment();
-  usersPhotos.forEach((photo) => {
+  photos.forEach((photo) => {
     const thumbnail = createThumbnail (photo);
     usersListFragment.append(thumbnail);
   });
