@@ -33,9 +33,7 @@ const addValidators = () => {
 
 addValidators();
 
-const initValidateUploadForm = () => {
-  validateUploadForm.validate();
-};
+const initValidateUploadForm = () => validateUploadForm.validate();
 
 const resetUploadFormErrors = () => {
   validateUploadForm.reset();

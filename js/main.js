@@ -1,5 +1,5 @@
-import {renderThumbnails} from './render-thumbnails.js';
-import {initUploadPhoto } from './upload-photo.js';
+import {initThumbnails} from './thumbnail/init-thumbnails.js';
+import {initUploadPhoto } from './upload/upload-photo.js';
 
-renderThumbnails();
+initThumbnails();
 initUploadPhoto ();

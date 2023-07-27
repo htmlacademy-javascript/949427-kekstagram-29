@@ -50,10 +50,6 @@ const effectValue = document.querySelector('.effect-level__value');
 const previewPhoto = document.querySelector('.img-upload__preview img');
 const startEffect = document.querySelector('.effects__item input:checked').value;
 
-let currentFilter;
-let currentUnit;
-let currentValue;
-
 const switchSlider = (effect) => {
   if (effect === 'none') {
     sliderContainer.classList.add('hidden');
@@ -64,24 +60,28 @@ const switchSlider = (effect) => {
 
 const createSlider = () => {
   switchSlider(startEffect);
-  const {filter, min, max, step, unit} = SliderEffects.startEffect || SliderEffects.default;
+  const {min, max, step} = SliderEffects.startEffect || SliderEffects.default;
   noUiSlider.create(slider, {
     range: {min, max},
     start: max,
     step,
     connect: 'lower',
   });
-  currentFilter = filter;
-  currentUnit = unit;
-  currentValue = max;
 };
 
-const updatePreviewPhoto = () => {
+const updatePreviewPhoto = (currentFilter, currentValue, currentUnit) => {
   if (currentFilter === 'none') {
     previewPhoto.style.filter = 'none';
   } else {
     previewPhoto.style.filter = `${currentFilter}(${currentValue}${currentUnit})`;
   }
+};
+
+const updateSlider = (filter, unit) => {
+  slider.noUiSlider.on('update', () => {
+    effectValue.value = slider.noUiSlider.get();
+    updatePreviewPhoto(filter, effectValue.value, unit);
+  });
 };
 
 const onEffectsChange = (evt) => {
@@ -92,25 +92,19 @@ const onEffectsChange = (evt) => {
     step,
     connect: 'lower',
   });
-  currentFilter = filter;
-  currentUnit = unit;
-  currentValue = max;
-  updatePreviewPhoto({filter});
+  updatePreviewPhoto(filter, max, unit);
   switchSlider(evt.target.value);
+  updateSlider(filter, unit);
 };
 
 const initEffectsPhoto = () => {
   createSlider();
   effects.addEventListener('change', onEffectsChange);
-  slider.noUiSlider.on('update', () => {
-    currentValue = slider.noUiSlider.get();
-    effectValue.value = currentValue;
-    updatePreviewPhoto();
-  });
 };
 
 const effectsReset = () => {
   slider.noUiSlider.destroy();
+  previewPhoto.style.filter = 'none';
 };
 
 export {initEffectsPhoto, effectsReset};
