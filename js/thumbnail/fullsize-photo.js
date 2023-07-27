@@ -1,3 +1,5 @@
+import {isEscapeKey} from '../utils/util.js';
+
 const COMMENTS_PORTION = 5;
 const fullsizePhoto = document.querySelector('.big-picture');
 const closeButton = fullsizePhoto.querySelector('.big-picture__cancel');
@@ -65,7 +67,7 @@ function onCloseButtonClick () {
 }
 
 function onDocumentKeydown (evt) {
-  if (evt.key === 'Escape' && !evt.target.closest('.social__footer-text')) {
+  if (isEscapeKey(evt) && !evt.target.closest('.social__footer-text')) {
     evt.preventDefault();
     closeFullsizePhoto();
   }
