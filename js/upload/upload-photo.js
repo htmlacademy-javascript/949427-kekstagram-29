@@ -35,8 +35,11 @@ const openUploadForm = () => {
 };
 
 const closeUploadForm = () => {
+  const successMessage = document.querySelector('.success');
   uploadOverlay.classList.add('hidden');
-  document.body.classList.remove('modal-open');
+  if (!document.body.contains(successMessage)) {
+    document.body.classList.remove('modal-open');
+  }
   uploadForm.reset();
   resetUploadFormErrors();
   scaleReset();

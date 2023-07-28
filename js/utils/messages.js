@@ -33,6 +33,10 @@ const showMessage = (state, message, textButton) => {
 };
 
 const closeMessage = () => {
+  const successMessage = document.querySelector('.success');
+  if (document.body.contains(successMessage)) {
+    document.body.classList.remove('modal-open');
+  }
   document.removeEventListener ('keydown', onDocumentKeydown);
   modal.remove();
 };
