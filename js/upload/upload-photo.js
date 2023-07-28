@@ -5,6 +5,8 @@ import {sendData} from '../utils/api.js';
 import {showMessage} from '../utils/messages.js';
 import {isEscapeKey} from '../utils/util.js';
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+
 const success = {
   STATE: 'success',
   MESSAGE: 'Изображение успешно загружено',
@@ -24,6 +26,8 @@ const uploadInput = document.querySelector('.img-upload__input');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
 const uploadCancel = document.querySelector('.img-upload__cancel');
 const submitButton = document.querySelector('.img-upload__submit');
+const uploadPreview = document.querySelector('.img-upload__preview img');
+const effectsPreview = document.querySelectorAll('.effects__preview');
 
 const openUploadForm = () => {
   uploadOverlay.classList.remove('hidden');
@@ -47,7 +51,18 @@ const closeUploadForm = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-const onUploadInputChange = () => openUploadForm ();
+const onUploadInputChange = () => {
+  const file = uploadInput.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    uploadPreview.src = URL.createObjectURL(file);
+    effectsPreview.forEach((preview) => {
+      preview.style.backgroundImage = `url('${uploadPreview.src}')`;
+    });
+  }
+  openUploadForm ();
+};
 
 function onUploadCancelClick () {
   closeUploadForm();

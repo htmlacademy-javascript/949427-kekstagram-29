@@ -3,7 +3,7 @@ import {isEscapeKey} from '../utils/util.js';
 const COMMENTS_PORTION = 5;
 const fullsizePhoto = document.querySelector('.big-picture');
 const closeButton = fullsizePhoto.querySelector('.big-picture__cancel');
-const image = fullsizePhoto.querySelector('.big-picture__img').querySelector('img');
+const image = fullsizePhoto.querySelector('.big-picture__img img');
 const likesCount = fullsizePhoto.querySelector('.likes-count');
 const commentsCount = fullsizePhoto.querySelector('.comments-count');
 const descriptionPhoto = fullsizePhoto.querySelector('.social__caption');
