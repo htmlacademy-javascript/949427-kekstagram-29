@@ -8,11 +8,16 @@ const filtersForm = document.querySelector('.img-filters__form');
 const pictures = document.querySelector('.pictures');
 
 const sortRandomPhoto = (data) => {
+  const uniquePhoto = new Set(data);
   const randomPhotos = new Set();
-  while (randomPhotos.size < RANDOM_PHOTO_COUNT) {
-    randomPhotos.add(getRandomArrayElement(data));
+  if (uniquePhoto.size <= RANDOM_PHOTO_COUNT) {
+    return uniquePhoto;
+  } else {
+    while (randomPhotos.size < RANDOM_PHOTO_COUNT) {
+      randomPhotos.add(getRandomArrayElement(data));
+    }
+    return randomPhotos;
   }
-  return randomPhotos;
 };
 
 const sortByComments = (data) => data.slice().sort((a, b) => b.comments.length - a.comments.length);
