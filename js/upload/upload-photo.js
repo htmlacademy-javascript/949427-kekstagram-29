@@ -39,11 +39,8 @@ const openUploadForm = () => {
 };
 
 const closeUploadForm = () => {
-  const successMessage = document.querySelector('.success');
   uploadOverlay.classList.add('hidden');
-  if (!document.body.contains(successMessage)) {
-    document.body.classList.remove('modal-open');
-  }
+  document.body.classList.remove('modal-open');
   uploadForm.reset();
   resetUploadFormErrors();
   scaleReset();
@@ -94,6 +91,7 @@ const onSendError = () => {
 const onUploadFormSubmit = (evt) => {
   evt.preventDefault();
   if (initValidateUploadForm()) {
+    resetUploadFormErrors();
     const data = new FormData(evt.target);
     blockSubmitButton(true);
     sendData(SEND_URL, data, onSendSuccess, onSendError);
