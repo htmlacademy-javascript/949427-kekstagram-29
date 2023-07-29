@@ -1,4 +1,4 @@
-const SliderEffects = {
+const EFFECTS = {
   default: {
     filter: 'none',
     min: 0,
@@ -60,7 +60,7 @@ const switchSlider = (effect) => {
 
 const createSlider = () => {
   switchSlider(startEffect);
-  const {min, max, step} = SliderEffects.startEffect || SliderEffects.default;
+  const {min, max, step} = EFFECTS.startEffect || EFFECTS.default;
   noUiSlider.create(slider, {
     range: {min, max},
     start: max,
@@ -77,6 +77,15 @@ const updatePreviewPhoto = (currentFilter, currentValue, currentUnit) => {
   }
 };
 
+const updateSliderOptions = (min, max, step) => {
+  slider.noUiSlider.updateOptions({
+    range: {min, max},
+    start: max,
+    step,
+    connect: 'lower',
+  });
+};
+
 const updateSlider = (filter, unit) => {
   slider.noUiSlider.on('update', () => {
     effectValue.value = slider.noUiSlider.get();
@@ -85,13 +94,8 @@ const updateSlider = (filter, unit) => {
 };
 
 const onEffectsChange = (evt) => {
-  const {filter, min, max, step, unit} = SliderEffects[evt.target.value] || SliderEffects.default;
-  slider.noUiSlider.updateOptions({
-    range: {min, max},
-    start: max,
-    step,
-    connect: 'lower',
-  });
+  const {filter, min, max, step, unit} = EFFECTS[evt.target.value] || EFFECTS.default;
+  updateSliderOptions(min, max,step);
   updatePreviewPhoto(filter, max, unit);
   switchSlider(evt.target.value);
   updateSlider(filter, unit);
@@ -103,8 +107,10 @@ const initEffectsPhoto = () => {
 };
 
 const effectsReset = () => {
-  slider.noUiSlider.destroy();
-  previewPhoto.style.filter = 'none';
+  const {filter, min, max, step, unit} = EFFECTS.startEffect || EFFECTS.default;
+  switchSlider(startEffect);
+  updateSliderOptions(min, max,step);
+  updatePreviewPhoto(filter, max, unit);
 };
 
 export {initEffectsPhoto, effectsReset};

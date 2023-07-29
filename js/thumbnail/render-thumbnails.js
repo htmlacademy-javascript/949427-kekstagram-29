@@ -1,9 +1,10 @@
-import {openFullsizePhoto} from './fullsize-photo.js';
+import {openFullSizePhoto} from './full-size-photo.js';
 
 const usersListPhotos = document.querySelector('.pictures');
 const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-const createThumbnail = ({url, description, likes, comments}) => {
+const createThumbnail = (data) => {
+  const {url, description, likes, comments} = data;
   const thumbnail = thumbnailTemplate.cloneNode(true);
   const image = thumbnail.querySelector('.picture__img');
   image.src = url;
@@ -12,18 +13,14 @@ const createThumbnail = ({url, description, likes, comments}) => {
   thumbnail.querySelector('.picture__comments').textContent = comments.length;
   thumbnail.addEventListener('click', (evt) => {
     evt.preventDefault();
-    openFullsizePhoto ({url, description, likes, comments});
+    openFullSizePhoto (data);
   });
   return thumbnail;
 };
 
 const renderThumbnails = (photos) => {
   const usersListFragment = document.createDocumentFragment();
-  photos.forEach((photo) => {
-    const thumbnail = createThumbnail (photo);
-    usersListFragment.append(thumbnail);
-  });
-
+  photos.forEach((photo) => usersListFragment.append(createThumbnail (photo)));
   usersListPhotos.append(usersListFragment);
 };
 

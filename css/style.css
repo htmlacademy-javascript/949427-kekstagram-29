@@ -1248,6 +1248,7 @@ main {
   margin-bottom: 50px;
 
   font-size: 32px;
+  line-height: 100%;
 }
 
 .success__title {
@@ -1255,6 +1256,7 @@ main {
   margin-bottom: 50px;
 
   font-size: 32px;
+  line-height: 100%;
 }
 
 .error__title::before {
@@ -1411,15 +1413,4 @@ main {
 
 .img-upload__field-wrapper--error {
   color: #e90000;
-}
-
-.get-data__error {
-  z-index: 1;
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  padding: 10px 3px;
-  text-align: center;
-  background-color: #e90000;
 }

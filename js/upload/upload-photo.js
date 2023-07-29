@@ -1,4 +1,4 @@
-import {initValidateUploadForm, resetUploadFormErrors} from './validate-upload-form.js';
+import {initValidateUploadForm, addValidators, resetUploadFormErrors} from './validate-upload-form.js';
 import {initScalePhoto, scaleReset} from './scale-upload-photo.js';
 import {initEffectsPhoto, effectsReset} from './effects-upload-photo.js';
 import {sendData} from '../utils/api.js';
@@ -7,16 +7,22 @@ import {isEscapeKey} from '../utils/util.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
 
-const success = {
+const Success = {
   STATE: 'success',
   MESSAGE: 'Изображение успешно загружено',
   TEXT_BUTTON: 'Круто!',
 };
 
-const error = {
+const Error = {
   STATE: 'error',
   MESSAGE: 'Ошибка загрузки файла',
   TEXT_BUTTON: 'Попробовать ещё раз',
+};
+
+const ErrorFile = {
+  STATE: 'error',
+  MESSAGE: 'Ошибка формата файла',
+  TEXT_BUTTON: 'Закрыть',
 };
 
 const SEND_URL = 'https://29.javascript.pages.academy/kekstagram';
@@ -34,8 +40,7 @@ const openUploadForm = () => {
   document.body.classList.add('modal-open');
   uploadCancel.addEventListener('click', onUploadCancelClick);
   document.addEventListener('keydown', onDocumentKeydown);
-  initScalePhoto();
-  initEffectsPhoto();
+
 };
 
 const closeUploadForm = () => {
@@ -57,8 +62,10 @@ const onUploadInputChange = () => {
     effectsPreview.forEach((preview) => {
       preview.style.backgroundImage = `url('${uploadPreview.src}')`;
     });
+    openUploadForm();
+    return;
   }
-  openUploadForm ();
+  showMessage(ErrorFile.STATE, ErrorFile.MESSAGE, ErrorFile.TEXT_BUTTON);
 };
 
 function onUploadCancelClick () {
@@ -73,19 +80,19 @@ function onDocumentKeydown(evt) {
   }
 }
 
-const blockSubmitButton = (state) => {
+const changeSubmitButtonState = (state) => {
   submitButton.disabled = state;
 };
 
 const onSendSuccess = () => {
-  showMessage(success.STATE, success.MESSAGE, success.TEXT_BUTTON);
-  blockSubmitButton(false);
+  showMessage(Success.STATE, Success.MESSAGE, Success.TEXT_BUTTON);
+  changeSubmitButtonState(false);
   closeUploadForm();
 };
 
 const onSendError = () => {
-  showMessage(error.STATE, error.MESSAGE, error.TEXT_BUTTON);
-  blockSubmitButton(false);
+  showMessage(Error.STATE, Error.MESSAGE, Error.TEXT_BUTTON);
+  changeSubmitButtonState(false);
 };
 
 const onUploadFormSubmit = (evt) => {
@@ -93,12 +100,15 @@ const onUploadFormSubmit = (evt) => {
   if (initValidateUploadForm()) {
     resetUploadFormErrors();
     const data = new FormData(evt.target);
-    blockSubmitButton(true);
+    changeSubmitButtonState(true);
     sendData(SEND_URL, data, onSendSuccess, onSendError);
   }
 };
 
 const initUploadPhoto = () => {
+  addValidators();
+  initScalePhoto();
+  initEffectsPhoto();
   uploadInput.addEventListener('change', onUploadInputChange);
   uploadForm.addEventListener('submit', onUploadFormSubmit);
 };

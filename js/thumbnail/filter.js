@@ -2,33 +2,33 @@ import {getRandomArrayElement} from '../utils/util.js';
 import {renderThumbnails} from './render-thumbnails.js';
 
 const RANDOM_PHOTO_COUNT = 10;
+const FILTER_RANDOM = 'filter-random';
+const FILTER_DISCUSSED = 'filter-discussed';
 
 const filters = document.querySelector('.img-filters');
 const filtersForm = document.querySelector('.img-filters__form');
 const pictures = document.querySelector('.pictures');
 
-const sortRandomPhoto = (data) => {
-  const uniquePhoto = new Set(data);
+const sortByRandom = (data) => {
   const randomPhotos = new Set();
-  if (uniquePhoto.size <= RANDOM_PHOTO_COUNT) {
-    return uniquePhoto;
-  } else {
-    while (randomPhotos.size < RANDOM_PHOTO_COUNT) {
-      randomPhotos.add(getRandomArrayElement(data));
-    }
-    return randomPhotos;
+  if (data.length <= RANDOM_PHOTO_COUNT) {
+    return data;
   }
+  while (randomPhotos.size < RANDOM_PHOTO_COUNT) {
+    randomPhotos.add(getRandomArrayElement(data));
+  }
+  return randomPhotos;
 };
 
-const sortByComments = (data) => data.slice().sort((a, b) => b.comments.length - a.comments.length);
+const sortByCommentsLength = (data) => data.slice().sort((a, b) => b.comments.length - a.comments.length);
 
 const getSortingData = (data, id) => {
   switch (id) {
-    case 'filter-random':
-      return sortRandomPhoto(data);
-    case 'filter-discussed':
-      return sortByComments(data);
-    case 'filter-default':
+    case FILTER_RANDOM:
+      return sortByRandom(data);
+    case FILTER_DISCUSSED:
+      return sortByCommentsLength(data);
+    default:
       return data;
   }
 };

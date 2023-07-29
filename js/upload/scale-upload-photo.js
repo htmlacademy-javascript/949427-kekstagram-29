@@ -36,7 +36,6 @@ const initScalePhoto = () => {
 };
 
 const scaleReset = () => {
-  scaleValue.value = `${SCALE_BASE_VALUE}%`;
   currentScale = SCALE_BASE_VALUE;
   changeScalePhoto(currentScale);
 };
