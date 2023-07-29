@@ -2,10 +2,13 @@ import {renderThumbnails} from './render-thumbnails.js';
 import {initFilter, renderSortingThumbnails} from './filter.js';
 import {getData} from '../utils/api.js';
 import {debounce} from '../utils/util.js';
+import {showMessage} from '../utils/messages.js';
 
 const DATA_URL = 'https://29.javascript.pages.academy/kekstagram/data';
-const ERROR_GET_DATA = 'Ошибка загрузки. Попробуйте обновить страницу';
-const DELAY = 5000;
+const Error = {
+  STATE: 'error',
+  MESSAGE: 'Ошибка загрузки. Попробуйте обновить страницу',
+};
 
 const onGetSuccess = (data) => {
   const debouncedRenderThumbnails = debounce(renderSortingThumbnails);
@@ -13,19 +16,8 @@ const onGetSuccess = (data) => {
   initFilter(data, debouncedRenderThumbnails);
 };
 
-const onGetError = () => {
-  const errorMessage = document.createElement('div');
-  errorMessage.textContent = ERROR_GET_DATA;
-  errorMessage.classList.add('get-data__error');
-  document.body.append(errorMessage);
-  setTimeout(() => {
-    errorMessage.remove();
-  }, DELAY);
-};
+const onGetError = () => showMessage(Error.STATE, Error.MESSAGE);
 
-const initThumbnails = () => {
-  getData(DATA_URL, onGetSuccess, onGetError);
-};
-
+const initThumbnails = () => getData(DATA_URL, onGetSuccess, onGetError);
 
 export {initThumbnails};

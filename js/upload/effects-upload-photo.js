@@ -1,4 +1,4 @@
-const SliderEffects = {
+const EFFECTS = {
   default: {
     filter: 'none',
     min: 0,
@@ -60,7 +60,7 @@ const switchSlider = (effect) => {
 
 const createSlider = () => {
   switchSlider(startEffect);
-  const {min, max, step} = SliderEffects.startEffect || SliderEffects.default;
+  const {min, max, step} = EFFECTS.startEffect || EFFECTS.default;
   noUiSlider.create(slider, {
     range: {min, max},
     start: max,
@@ -85,7 +85,7 @@ const updateSlider = (filter, unit) => {
 };
 
 const onEffectsChange = (evt) => {
-  const {filter, min, max, step, unit} = SliderEffects[evt.target.value] || SliderEffects.default;
+  const {filter, min, max, step, unit} = EFFECTS[evt.target.value] || EFFECTS.default;
   slider.noUiSlider.updateOptions({
     range: {min, max},
     start: max,
