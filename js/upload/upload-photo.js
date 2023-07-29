@@ -40,8 +40,7 @@ const openUploadForm = () => {
   document.body.classList.add('modal-open');
   uploadCancel.addEventListener('click', onUploadCancelClick);
   document.addEventListener('keydown', onDocumentKeydown);
-  initScalePhoto();
-  initEffectsPhoto();
+
 };
 
 const closeUploadForm = () => {
@@ -108,6 +107,8 @@ const onUploadFormSubmit = (evt) => {
 
 const initUploadPhoto = () => {
   addValidators();
+  initScalePhoto();
+  initEffectsPhoto();
   uploadInput.addEventListener('change', onUploadInputChange);
   uploadForm.addEventListener('submit', onUploadFormSubmit);
 };
