@@ -9,19 +9,19 @@ const FILE_TYPES = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
 
 const Success = {
   STATE: 'success',
-  MESSAGE: 'Изображение успешно загружено',
+  MESSAGE: 'Изображение успешно загружено.',
   TEXT_BUTTON: 'Круто!',
 };
 
 const Error = {
   STATE: 'error',
-  MESSAGE: 'Ошибка загрузки файла',
+  MESSAGE: 'Ошибка загрузки файла.',
   TEXT_BUTTON: 'Попробовать ещё раз',
 };
 
 const ErrorFile = {
   STATE: 'error',
-  MESSAGE: 'Ошибка формата файла',
+  MESSAGE: 'Ошибка формата файла.',
   TEXT_BUTTON: 'Закрыть',
 };
 
